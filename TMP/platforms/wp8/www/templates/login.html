@@ -1,0 +1,26 @@
+<ion-modal-view>
+  <ion-header-bar>
+      
+    <h1 class="title">Login</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+      <div class="bar bar-header bar-energized">
+          <h1 class="title">Too Many Projects</h1>
+      </div>
+     
+    <form ng-submit="doLogin()">
+      <div class="list">
+       
+          <label class="item">
+              <button class="button button-block button-positive" ng-click="fbLogin()">
+                  Sign in with Facebook
+              </button>
+          </label>
+          
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

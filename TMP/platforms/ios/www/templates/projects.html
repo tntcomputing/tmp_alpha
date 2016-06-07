@@ -1,0 +1,35 @@
+<ion-view view-title="Playlists">
+    <ion-nav-title >My Projects</ion-nav-title>
+    <ion-content ng-controller="ProjectsCtrl">
+        
+        
+        <div  ng-hide="notification.message.length === 0" class="card">
+            <div class="item item-text-wrap">
+                {{notification.message}}
+            </div>
+        </div>
+        <ion-list ng-repeat="project in projects">
+            <ion-item  href="#/app/projects/{{project.id}}">
+                <h1>{{project.id}}</h1>
+                <p>Make: {{project.make}}<br/>
+                Model: {{project.model}}</p>
+            </ion-item>
+
+        </ion-list>
+        <div class="list">
+
+            <label class="item" ng-hide="!isUserLoggedIn">
+                <button class="button button-block button-positive" ng-click="createProject()">
+                    New Project
+                </button>
+
+            </label>
+            <label class="item" ng-hide="isUserLoggedIn">
+                <button class="button button-block button-positive" ng-click="fbLogin()">
+                    Sign in with Facebook
+                </button>
+            </label>
+
+        </div>
+    </ion-content>
+</ion-view>

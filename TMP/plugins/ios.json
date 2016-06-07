@@ -1,0 +1,39 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        }
+    },
+    "dependent_plugins": {}
+}

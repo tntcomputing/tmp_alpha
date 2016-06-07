@@ -1,0 +1,80 @@
+<ion-view view-title="My project">
+  <ion-content ng-controller="ProjectsCtrl">
+      
+      <div class="list card">
+          <div class="item item-divider">
+              <span>Resistration No: </span>{{project._id}}
+          </div>
+          <script>console.log(location.href);</script>
+          <div class="item item-avatar">
+              <img ng-src="{{urlForImage(project.smallImage)}}" width="30" >
+             
+              <h2>{{project.data.make}}, {{project.data.model}}</h2>
+              <p><span>Date first registered: {{project.data.dateOfFirstRegistration}}</span></p>
+          </div>
+
+          <div class="item item-body">
+              <img ng-src="{{urlForImage(project.mainImage)}}" ng-click="addImage()" height="200">
+              
+              <p>
+                  <span>Make: </span>{{project.data.make}}<br/>
+                  <span>Model: </span>{{project.data.model}}<br />
+                  <span>Colour: </span>{{project.data.colour}}<br />
+                  <span>Fuel Type: </span>{{project.data.fuelType}}<br />
+                  {{project.description}}
+              </p>
+             
+                  <h2 class="item item-divider">Tax Status</h2>
+              
+              
+              <p>
+                  <span>Tax Status: </span>{{project.data.taxStatus}}<br />
+                  <span>Tax Details: </span>{{project.data.taxDetails}}<br />
+                  <span>Colour: </span>{{project.data.colour}}<br />
+                  <span>Fuel Type: </span>{{project.data.fuelType}}<br />
+
+              </p>
+              <h2 class="item item-divider">Mot Status</h2>
+              <p>
+                  
+                  <span>Mot: </span>{{project.data.motDetails}}<br />
+                  <span>Mot Reference Number: </span>{{project.data.motTestReports[project.currentMOT].motTestNumber}}<br />
+                  <span>Last Mot Date: </span>{{project.data.motTestReports[project.currentMOT].testDate}}<br />
+                  <span>Odometer Reading: </span>{{project.data.motTestReports[project.currentMOT].odometerReading}}<br />
+                  <h2>Advisory Items</h2><br/>
+                  <ul class="list" ng-repeat="s in project.data.motTestReports[project.currentMOT].advisoryItems">
+
+                      <li class="item">
+                          {{s}}
+                      </li>
+                  </ul>
+                  <h2>Failure Items</h2><br />
+                  <ul class="list" ng-repeat="s in project.data.motTestReports[project.currentMOT].failureItems">
+
+                      <li class="item">
+                          {{s}}
+                      </li>
+                  </ul>
+                  <a ng-hide="false" class="button icon-left ion-chevron-left button-clear button-dark" ng-click="previous()">Previous</a>
+                  <a ng-hide="false" class="button button-clear button-dark" ng-click="latest()">Latest</a>
+                  <a ng-hide="false" class="button icon-right ion-chevron-right button-clear button-dark" ng-click="next()">Next</a>
+
+              </p>
+              <p>
+                  <button class="button button-outline button-energized">
+                      Edit Project
+                  </button>
+                  <button class="button button-outline button-energized">
+                      Remove Project
+                  </button>
+                 
+              </p>
+          </div>
+          <div class="item item-divider">
+               
+          </div>
+
+      </div>
+      
+  </ion-content>
+</ion-view>

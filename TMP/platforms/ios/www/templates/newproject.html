@@ -1,0 +1,31 @@
+<ion-view view-title="New Project">
+
+  <ion-content ng-controller="NewProjectCtrl">
+      
+   <div>
+       <form novalidate class="DVLASearch-form" name="DVLASearch">
+           <div class="list">
+               <label class="item item-input">
+                   <span class="input-label">Enter Registration Number</span>
+                   <input type="text" ng-model="newCar.regNo" id="regNo" required>
+                   <span ng-show="DVLASearch.newCar.regNo.$dirty && DVLASearch.newCar.regNo.$error.required">Required: Tell us your Registration Number</span>
+
+               </label>
+               <label class="item">
+                   <button class="button button-block button-positive" ng-click="checkDVLA()">
+                       Lookup Car
+                   </button>
+               </label>
+
+           </div>
+           <div class="card" ng-hide="true">
+               <div class="item item-text-wrap" ng-show="master">
+                   {{master | json}}
+               </div>
+           </div>
+       </form>
+
+   </div>
+     
+  </ion-content>
+</ion-view>
