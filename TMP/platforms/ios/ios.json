@@ -51,6 +51,22 @@
                         {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ActionSheet\"><param name=\"ios-package\" value=\"ActionSheet\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AppVersion\"><param name=\"ios-package\" value=\"AppVersion\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PaymentsPlugin\"><param name=\"ios-package\" value=\"PaymentsPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -94,6 +110,21 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-filepath": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-inapppurchase": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
         }
     },
     "dependent_plugins": {},
@@ -367,6 +398,38 @@
             "pluginId": "cordova-plugin-file-transfer",
             "clobbers": [
                 "window.FileTransfer"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+            "id": "cordova-plugin-actionsheet.ActionSheet",
+            "pluginId": "cordova-plugin-actionsheet",
+            "clobbers": [
+                "window.plugins.actionsheet"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+            "id": "cordova-plugin-app-version.AppVersionPlugin",
+            "pluginId": "cordova-plugin-app-version",
+            "clobbers": [
+                "cordova.getAppVersion"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inapppurchase/www/index-ios.js",
+            "id": "cordova-plugin-inapppurchase.PaymentsPlugin",
+            "pluginId": "cordova-plugin-inapppurchase",
+            "clobbers": [
+                "inAppPurchase"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+            "id": "cordova-plugin-splashscreen.SplashScreen",
+            "pluginId": "cordova-plugin-splashscreen",
+            "clobbers": [
+                "navigator.splashscreen"
             ]
         }
     ]

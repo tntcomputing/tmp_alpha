@@ -31,7 +31,7 @@
     "tag": "v4.1.0",
     "commit": "0877f1e21d4358afbfef29a460503cca9b7e166c"
   },
-  "_source": "git://github.com/angular-pouchdb/bower-angular-pouchdb.git",
+  "_source": "https://github.com/angular-pouchdb/bower-angular-pouchdb.git",
   "_target": "~4.1.0",
   "_originalSource": "angular-pouchdb",
   "_direct": true

@@ -9,8 +9,8 @@
         <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>com.ionicframework.ionicsidemenu</RootNamespace>
-        <AssemblyName>com.ionicframework.ionicsidemenu</AssemblyName>
+        <RootNamespace>uk.co.tntcomputing.tmp</RootNamespace>
+        <AssemblyName>uk.co.tntcomputing.tmp</AssemblyName>
         <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
         <SilverlightVersion>
         </SilverlightVersion>
@@ -21,9 +21,9 @@
         <SupportedCultures>en-US</SupportedCultures>
         <XapOutputs>true</XapOutputs>
         <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-        <XapFilename>CordovaAppProj_$(Configuration)_$(Platform).xap</XapFilename>
+        <XapFilename>uk.co.tntcomputing.tmp.xap</XapFilename>
         <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
-        <SilverlightAppEntry>com.ionicframework.ionicsidemenu.App</SilverlightAppEntry>
+        <SilverlightAppEntry>uk.co.tntcomputing.tmp.App</SilverlightAppEntry>
         <ValidateXaml>true</ValidateXaml>
         <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
         <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
@@ -237,5 +237,17 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugins\cordova-plugin-file-transfer\FileTransfer.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-actionsheet\ActionSheet.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-app-version\AppVersion.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-splashscreen\SplashScreen.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-splashscreen\ResolutionHelper.cs" />
     </ItemGroup>
 </Project>

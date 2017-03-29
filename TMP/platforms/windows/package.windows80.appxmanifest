@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-    <Identity Name="com.ionicframework.ionicsidemenu" Publisher="CN=$username$" Version="0.0.1.0" />
+    <Identity Name="uk.co.tntcomputing.tmp" Publisher="CN=$username$" Version="0.0.3.0" />
     <Properties>
         <DisplayName>Too Many Projects</DisplayName>
         <PublisherDisplayName>Tnt Computing</PublisherDisplayName>
@@ -14,7 +14,7 @@
         <Resource Language="x-generate" />
     </Resources>
     <Applications>
-        <Application Id="com.ionicframework.ionicsidemenu" StartPage="www/index.html">
+        <Application Id="uk.co.tntcomputing.tmp" StartPage="www/index.html">
             <VisualElements BackgroundColor="#464646" Description="CordovaApp" DisplayName="Too Many Projects" ForegroundText="light" Logo="images\Square150x150Logo.png" SmallLogo="images\Square30x30Logo.png">
                 <DefaultTile ShowName="allLogos" WideLogo="images\Wide310x150Logo.png" />
                 <SplashScreen Image="images\splashscreen.png" />

@@ -33,6 +33,21 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "Too Many Projects"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "Too Many Projects"
+        },
+        "cordova-plugin-filepath": {
+            "PACKAGE_NAME": "Too Many Projects"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "Too Many Projects"
+        },
+        "cordova-plugin-inapppurchase": {
+            "PACKAGE_NAME": "Too Many Projects"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "Too Many Projects"
         }
     },
     "dependent_plugins": {}

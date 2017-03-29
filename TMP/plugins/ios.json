@@ -33,6 +33,21 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-filepath": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-inapppurchase": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
         }
     },
     "dependent_plugins": {}

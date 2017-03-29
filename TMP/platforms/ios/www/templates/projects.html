@@ -1,35 +1,54 @@
-<ion-view view-title="Playlists">
+<ion-view view-title="ListOfProjects" ng-controller="ProjectsCtrl">
     <ion-nav-title >My Projects</ion-nav-title>
-    <ion-content ng-controller="ProjectsCtrl">
+    <ion-floating-menu ng-hide="!userState.isUserLoggedIn" >
+        <ion-floating-item button-class="floatButton" button-color="#2AC9AA" text-class="menuText" icon="ion-star" click="toggleList('fav')" text="Favourtites"></ion-floating-item>
+        <ion-floating-item button-class="floatButton" button-color="#2AC9AA" text-class="menuText" icon="ion-android-alert" click="toggleList('mot')" text="MOT Issue"></ion-floating-item>
+        <ion-floating-item button-class="floatButton" button-color="#2AC9AA" text-class="menuText" icon="ion-android-alert" click="toggleList('insurance')" text="Insurance Issue"></ion-floating-item>
+
+        <ion-floating-item button-class="floatButton" button-color="#2AC9AA" text-class="menuText" icon="ion-android-alert" click="toggleList('tax')" text="TAX Issue"></ion-floating-item>
+        <ion-floating-item button-class="floatButton" button-color="#2AC9AA" text-class="menuText" icon="ion-arrow-up-b" click="toggleList('AZ')" text="A-Z"></ion-floating-item>
+    </ion-floating-menu>
+     <ion-content >
         
-        
-        <div  ng-hide="notification.message.length === 0" class="card">
-            <div class="item item-text-wrap">
-                {{notification.message}}
+
+            <div ng-hide="notification.message.length === 0" class="card">
+                <div class="item item-text-wrap">
+                    {{notification.message}}
+                </div>
             </div>
-        </div>
-        <ion-list ng-repeat="project in projects">
-            <ion-item  href="#/app/projects/{{project.id}}">
-                <h1>{{project.id}}</h1>
-                <p>Make: {{project.make}}<br/>
-                Model: {{project.model}}</p>
-            </ion-item>
+        
+            <ion-list ng-repeat="project in projects | orderBy: ['make','model'] | filter:search">
+                <ion-item href="#/app/projects/{{project.id}}">
+                    <h1>{{project.id}}</h1>
+                    
+                        <h2>{{project.make}}</h2>
+                        <h2>{{project.model}}</h2>
+                    
+                    <span ng-class="project.motStatus.motClass">{{project.motStatus.motText}}</span>
+                    <span ng-class="project.taxStatus.taxClass">{{project.taxStatus.taxText}}</span>
+                    <span ng-class="project.insuranceStatus.insuranceClass">{{project.insuranceStatus.insuranceText}}</span>
+                    <i id="like" ng-class="{'icon energized ion-star': project.fav, 'icon energized ion-android-star-outline': !project.fav}"></i>
 
-        </ion-list>
-        <div class="list">
+                </ion-item>
 
-            <label class="item" ng-hide="!isUserLoggedIn">
-                <button class="button button-block button-positive" ng-click="createProject()">
-                    New Project
-                </button>
+            </ion-list>
+        
+            <div class="list">
 
-            </label>
-            <label class="item" ng-hide="isUserLoggedIn">
-                <button class="button button-block button-positive" ng-click="fbLogin()">
-                    Sign in with Facebook
-                </button>
-            </label>
+                <label class="item" ng-hide="!userState.isUserLoggedIn">
+                    <button class="button button-block button-positive" ng-click="createProject()">
+                        New Project
+                    </button>
 
-        </div>
-    </ion-content>
+                </label>
+                <label class="item" ng-hide="userState.isUserLoggedIn">
+                    <button class="button button-block button-positive" ng-click="fbLogin()">
+                        Sign in with Facebook
+                    </button>
+                </label>
+
+            </div>
+</ion-content>
+    <div class="menuBackground" ng-show="hideBackground"></div>
+
 </ion-view>

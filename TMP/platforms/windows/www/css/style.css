@@ -1,1 +1,91 @@
 /* Empty. Add your own CSS if you like */
+ion-item .tax {
+    margin-top:25px;
+    float: right;
+    
+}
+ion-item .insurance {
+    margin-top:50px;
+    float: right;
+}
+
+#like{
+    font-size:25px;
+    float: right;
+    
+}
+
+.floatButton{
+    background-color: #2AC9AA;
+    opacity:1;
+    color:#fff;
+    
+
+}
+ .lblTitle{
+    width:60px;
+    display: inline-block;
+}
+
+.android-scroll-bar ::-webkit-scrollbar {width: 5px;}
+
+.android-scroll-bar ::-webkit-scrollbar-track { border-radius: 10px;}
+
+.android-scroll-bar ::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(169,169,169); }
+
+.android-scroll-bar ::-webkit-scrollbar-thumb:window-inactive {background: rgb(128,128,128); }
+
+.modalImg{
+    max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.modal  {
+    height: 100% !important;
+    background-color: black !important;
+    overflow: hidden;
+    display: -webkit-box !important;
+    display: -moz-box !important;
+    display: -ms-flexbox !important;
+    display: -webkit-flex !important;
+    display: flex !important;
+    -webkit-box-direction: normal !important;
+    -moz-box-direction: normal !important;
+    -webkit-box-orient: horizontal !important;
+    -moz-box-orient: horizontal !important;
+    -webkit-flex-direction: row !important;
+    -ms-flex-direction: row !important;
+    flex-direction: row !important;
+    -webkit-box-align: center !important;
+    -moz-box-align: center !important;
+    -webkit-align-items: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+
+.menuBackground  {
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background:rgba(0,0,0,0.7); 
+    pointer-events:auto;
+}
+
+.menuText{
+    background-color:#2AC9AA !important;
+    color:#FFF !important;
+
+}

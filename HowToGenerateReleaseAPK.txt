@@ -1,0 +1,8 @@
+Steps to upload TMP after compiling for release
+
+1) Open cmd prompt
+2) cd C:\Users\tiz_000\Documents\visual studio 2015\Projects\TMP\TMP\bin\Android\Release
+3) Copy my-release-key.keystore from C:\Users\tiz_000\Documents\visual studio 2015\Projects\TMP to C:\Users\tiz_000\Documents\visual studio 2015\Projects\TMP\TMP\bin\Android\Release
+4) run cmd jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk alias-name
+           jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk alias_name
+5) run cmd "c:\Program Files (x86)\Android\android-sdk\build-tools\23.0.1\zipalign" -v 4 android-release-unsigned.apk tmp.apk

@@ -33,6 +33,21 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "{9270d390-df9f-11e5-bc64-a9394fdf61c4}"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "{9270d390-df9f-11e5-bc64-a9394fdf61c4}"
+        },
+        "cordova-plugin-filepath": {
+            "PACKAGE_NAME": "{9270d390-df9f-11e5-bc64-a9394fdf61c4}"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "{9270d390-df9f-11e5-bc64-a9394fdf61c4}"
+        },
+        "cordova-plugin-inapppurchase": {
+            "PACKAGE_NAME": "{9270d390-df9f-11e5-bc64-a9394fdf61c4}"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "{9270d390-df9f-11e5-bc64-a9394fdf61c4}"
         }
     },
     "dependent_plugins": {}

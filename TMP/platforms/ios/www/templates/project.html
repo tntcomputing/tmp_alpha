@@ -1,12 +1,23 @@
-<ion-view view-title="My project">
-  <ion-content ng-controller="ProjectsCtrl">
+<ion-view view-title="My project" ng-controller="ProjectsCtrl">
+    <ion-floating-button ng-hide="editMode" click="toggleEditMode()" has-footer="false" button-color="#2AC9AA" icon="ion-edit" iconColor="#fff">
+    </ion-floating-button>
+    <ion-floating-button ng-show="editMode" click="toggleEditMode()" has-footer="false" button-color="#2AC9AA" icon="ion-checkmark" iconColor="#fff">
+    </ion-floating-button>
+  <ion-content >
       
       <div class="list card">
+          <div class="bar bar-header bar-assertive"  ng-show="editMode">
+              <h1 class="title">EDIT MODE</h1>
+          </div>
+          
           <div class="item item-divider">
               <span>Resistration No: </span>{{project._id}}
+              <i id="like" ng-class="{'icon energized ion-star': project.fav, 'icon energized ion-android-star-outline': !project.fav}" ng-click="project.fav=!project.fav;updateProject();"></i>
+
           </div>
-          <script>console.log(location.href);</script>
+          <script>//console.log(location.href);</script>
           <div class="item item-avatar">
+              
               <img ng-src="{{urlForImage(project.smallImage)}}" width="30" >
              
               <h2>{{project.data.make}}, {{project.data.model}}</h2>
@@ -14,67 +25,186 @@
           </div>
 
           <div class="item item-body">
-              <img ng-src="{{urlForImage(project.mainImage)}}" ng-click="addImage()" height="200">
               
-              <p>
-                  <span>Make: </span>{{project.data.make}}<br/>
-                  <span>Model: </span>{{project.data.model}}<br />
-                  <span>Colour: </span>{{project.data.colour}}<br />
-                  <span>Fuel Type: </span>{{project.data.fuelType}}<br />
-                  {{project.description}}
-              </p>
+              <img ng-src="{{urlForImage(project.mainImage)}}" ng-click="addImage(urlForImage(project.mainImage))" height="200" >
+              <div ng-hide="editMode">
+                  <p>
+                      <span>Make: </span>
+                      <span>{{project.data.make}}</span>
+                      <br />
+
+                      <span>Model: </span>
+                      <span>{{project.data.model}}</span>
+                      <br />
+
+                      <span>Colour: </span>
+                      <span>{{project.data.colour}}</span>
+                      <br />
+
+                      <span>Fuel Type: </span>
+                      <span>{{project.data.fuelType}}</span>
+                      <br />
+                      <span>VIN: </span>
+                      <span>{{project.data.vin}}</span>
+                      <br />
+                  </p>
+                  <h2>My Notes</h2>
+                  <p>
+                      <span>{{project.description}}</span>
+                  </p>
+              </div>
+              <div ng-show="editMode">
+                  <p>
+                      <span>Make:</span>
+                      <span >
+                          <a href="#" editable-textarea="project.data.make" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                              <pre>{{project.data.make || 'Enter Make' }}</pre>
+                          </a>
+                      </span> 
+                      <br />
+
+                      <span>Model: </span>
+                      <span>
+                          <a href="#" editable-textarea="project.data.model" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                              <pre>{{project.data.model || 'Enter Model' }}</pre>
+                          </a>
+                      </span>
+                      <br />
+
+                      <span>Colour: </span>
+                      <span>
+                          <a href="#" editable-textarea="project.data.colour" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                              <pre>{{project.data.colour || 'Enter Colour' }}</pre>
+                          </a>
+                      </span>
+                      <br />
+
+                      <span>Fuel Type: </span>
+                      <span>
+                          <a href="#" editable-text="project.data.fuelType" e-uib-typeahead="fuelType for fuelType in fuelTypes | filter:$viewValue | limitTo:8" onaftersave="updateProject()">
+                              <pre>{{ project.data.fuelType || 'Enter Fuel Type' }}</pre>
+                          </a>
+                      </span>
+                      <br />
+                      <span>VIN: </span>
+                      <span>
+                          <a href="#" editable-text="project.data.vin" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                              <pre>{{ project.data.vin || 'Enter VIN' }}</pre>
+                          </a>
+                      </span>
+                      <br />
+                  </p>
+                  <h2>My Notes</h2>
+                  <p>
+                      <span>
+                          <a href="#" editable-textarea="project.description" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                              <pre>{{project.description || 'Enter project notes' }}</pre>
+                          </a>
+                      </span>
+                  </p>
+              </div>
              
-                  <h2 class="item item-divider">Tax Status</h2>
+           
+
+                  <h2 class="item item-divider">Tax Status<span ng-class="project.taxStatus.taxClass">{{project.taxStatus.taxText}}</span></h2>
               
               
               <p>
                   <span>Tax Status: </span>{{project.data.taxStatus}}<br />
                   <span>Tax Details: </span>{{project.data.taxDetails}}<br />
-                  <span>Colour: </span>{{project.data.colour}}<br />
-                  <span>Fuel Type: </span>{{project.data.fuelType}}<br />
-
-              </p>
-              <h2 class="item item-divider">Mot Status</h2>
-              <p>
-                  
-                  <span>Mot: </span>{{project.data.motDetails}}<br />
-                  <span>Mot Reference Number: </span>{{project.data.motTestReports[project.currentMOT].motTestNumber}}<br />
-                  <span>Last Mot Date: </span>{{project.data.motTestReports[project.currentMOT].testDate}}<br />
-                  <span>Odometer Reading: </span>{{project.data.motTestReports[project.currentMOT].odometerReading}}<br />
-                  <h2>Advisory Items</h2><br/>
-                  <ul class="list" ng-repeat="s in project.data.motTestReports[project.currentMOT].advisoryItems">
-
-                      <li class="item">
-                          {{s}}
-                      </li>
-                  </ul>
-                  <h2>Failure Items</h2><br />
-                  <ul class="list" ng-repeat="s in project.data.motTestReports[project.currentMOT].failureItems">
-
-                      <li class="item">
-                          {{s}}
-                      </li>
-                  </ul>
-                  <a ng-hide="false" class="button icon-left ion-chevron-left button-clear button-dark" ng-click="previous()">Previous</a>
-                  <a ng-hide="false" class="button button-clear button-dark" ng-click="latest()">Latest</a>
-                  <a ng-hide="false" class="button icon-right ion-chevron-right button-clear button-dark" ng-click="next()">Next</a>
-
-              </p>
-              <p>
-                  <button class="button button-outline button-energized">
-                      Edit Project
+                  <button class="button button-outline button-energized" ng-click="updateTax()" ng-show="editMode">
+                      Update Tax Info
                   </button>
-                  <button class="button button-outline button-energized">
-                      Remove Project
-                  </button>
-                 
+
               </p>
-          </div>
+              <h2 class="item item-divider">Insurance Status<span ng-class="project.insuranceStatus.insuranceClass">{{project.insuranceStatus.insuranceText}}</span></h2>
+
+              <div ng-show="!editMode">
+                  <p>
+                      <span>Insurance Provider: </span>{{project.data.insuranceDetails}}<br />
+                      <span>Insurance Policy Ref: </span>{{project.data.insurancePolicyRef}}<br />
+                      <span>Insurance Expiry Date: </span>{{project.data.insuranceExpiryDate | date: "dd-MM-yyyy HH:mm"}}<br />
+
+
+                  </p>
+            </div>
+              <div ng-show="editMode">
+                  <span>Insurance Provider: </span>
+                  <span>
+                      <a href="#" editable-text="project.data.insuranceDetails" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                          <pre>{{ project.data.insuranceDetails || 'Enter Insurance Provider' }}</pre>
+                      </a>
+                  </span>
+                  <br />
+                  <span>Insurance Policy Ref: </span>
+                  <span>
+                      <a href="#" editable-text="project.data.insurancePolicyRef" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                          <pre>{{ project.data.insurancePolicyRef || 'Enter Insurance Policy Ref' }}</pre>
+                      </a>
+                  </span>
+                  <br />
+                  <span>Insurance Expiry Date: </span>
+                  <span>
+                      <a href="#" editable-combodate="project.data.insuranceExpiryDate" e-min-year="2015" e-max-year="{{project.maxYear}}" onaftersave="updateProject()">
+                          {{ (project.data.insuranceExpiryDate | date:"dd-MM-yyyy HH:mm") || 'Enter Expiry Date' }}
+                      </a>
+                  </span>
+            </div>
+                  <h2 class="item item-divider">
+                      Mot Status<span ng-class="project.motStatus.motClass">{{project.motStatus.motText}}</span>
+                  </h2>
+                  <p>
+
+                      <span>Mot: </span>{{project.data.motDetails}}<br />
+                      <span>Latest MOT Date: </span>{{project.motTestReports[0].testDate}}<br />
+                      <button class="button button-outline button-energized" ng-click="updateMOT()" ng-show="editMode">
+                          Update MOT
+                      </button>
+                      <h3 class="item item-divider">Mot Date: {{project.motTestReports[project.currentMOT].testDate}}</h3>
+                      <span>Mot Reference Number: </span>{{project.motTestReports[project.currentMOT].motTestNumber}}<br />
+                      <span>Mot Date: </span>{{project.motTestReports[project.currentMOT].testDate}}<br />
+                      <span>Odometer Reading: </span>{{project.motTestReports[project.currentMOT].odometerReading}}<br />
+                      <h2>Advisory Items</h2><br />
+                      <ul class="list" style="width:100%" ng-repeat="s in project.motTestReports[project.currentMOT].advisoryItems">
+
+                          <li class="item item-text-wrap">
+                              {{s}}
+                          </li>
+                      </ul>
+                      <h2>Failure Items</h2><br />
+                      <ul class="list" ng-repeat="s in project.motTestReports[project.currentMOT].failureItems">
+
+                          <li class="item item-text-wrap">
+                              {{s}}
+                          </li>
+                      </ul>
+                      <a ng-hide="(project.currentMOT === (project.motTestReports.length -1))" class="button icon-left ion-chevron-left button-clear button-dark" ng-click="previous()">Older</a>
+                      <a ng-hide="(project.currentMOT === 0)" class="button button-clear button-dark" ng-click="latest()">Latest</a>
+                      <a ng-hide="(project.currentMOT === 0)" class="button icon-right ion-chevron-right button-clear button-dark" ng-click="next()">Newer</a>
+
+                  </p>
+                  <p>
+
+                      <button class="button button-outline button-energized" ng-click="removeProject()" ng-show="editMode">
+                          Remove Project
+                      </button>
+
+
+                  </p>
+              </div>
           <div class="item item-divider">
                
           </div>
 
       </div>
-      
+      <script id="modal.html" type="text/ng-template">
+          <div class="modal" ng-click="closeModal()">
+              <ion-content>
+                  <img ng-src="{{imgUrl}}" class="modalImg"  />
+                  <p>{{imgUrl}}</p>
+              </ion-content>
+          </div>
+      </script>
   </ion-content>
+
 </ion-view>

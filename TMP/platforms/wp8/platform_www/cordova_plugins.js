@@ -246,6 +246,30 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+        "id": "cordova-plugin-actionsheet.ActionSheet",
+        "pluginId": "cordova-plugin-actionsheet",
+        "clobbers": [
+            "window.plugins.actionsheet"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+        "id": "cordova-plugin-app-version.AppVersionPlugin",
+        "pluginId": "cordova-plugin-app-version",
+        "clobbers": [
+            "cordova.getAppVersion"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "pluginId": "cordova-plugin-splashscreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -259,7 +283,12 @@ module.exports.metadata =
     "cordova-plugin-inappbrowser": "1.2.1",
     "cordova-plugin-camera": "2.1.1",
     "cordova-plugin-file": "4.1.1",
-    "cordova-plugin-file-transfer": "1.5.0"
+    "cordova-plugin-file-transfer": "1.5.0",
+    "cordova-plugin-actionsheet": "2.2.2",
+    "cordova-plugin-filepath": "1.0.2",
+    "cordova-plugin-app-version": "0.1.9",
+    "cordova-plugin-inapppurchase": "1.0.0",
+    "cordova-plugin-splashscreen": "3.1.0"
 }
 // BOTTOM OF METADATA
 });

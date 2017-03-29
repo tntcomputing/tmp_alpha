@@ -39,6 +39,26 @@
                         {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ActionSheet\"><param name=\"android-package\" value=\"nl.xservices.plugins.actionsheet.ActionSheet\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FilePath\"><param name=\"android-package\" value=\"com.hiddentao.cordova.filepath.FilePath\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AppVersion\"><param name=\"android-package\" value=\"uk.co.whiteoctober.cordova.AppVersion\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBillingV3\"><param name=\"android-package\" value=\"com.alexdisler.inapppurchases.InAppBillingV3\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -48,7 +68,17 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 3
+                            "count": 4
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"com.android.vending.BILLING\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -82,6 +112,21 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-filepath": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-inapppurchase": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "uk.co.tntcomputing.tmp"
         }
     },
     "dependent_plugins": {},
@@ -312,6 +357,41 @@
             "id": "cordova-plugin-file-transfer.FileTransfer",
             "clobbers": [
                 "window.FileTransfer"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+            "id": "cordova-plugin-actionsheet.ActionSheet",
+            "clobbers": [
+                "window.plugins.actionsheet"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-filepath/www/FilePath.js",
+            "id": "cordova-plugin-filepath.FilePath",
+            "clobbers": [
+                "window.FilePath"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+            "id": "cordova-plugin-app-version.AppVersionPlugin",
+            "clobbers": [
+                "cordova.getAppVersion"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inapppurchase/www/index-android.js",
+            "id": "cordova-plugin-inapppurchase.InAppBillingV3",
+            "merges": [
+                "inAppPurchase"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+            "id": "cordova-plugin-splashscreen.SplashScreen",
+            "clobbers": [
+                "navigator.splashscreen"
             ]
         }
     ]

@@ -34,7 +34,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 
 
-namespace com.ionicframework.ionicsidemenu
+namespace uk.co.tntcomputing.tmp
 {
     public partial class MainPage : PhoneApplicationPage
     {
