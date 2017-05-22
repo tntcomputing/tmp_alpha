@@ -6,3 +6,4 @@ Steps to upload TMP after compiling for release
 4) run cmd jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk alias-name
            jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk alias_name
 5) run cmd "c:\Program Files (x86)\Android\android-sdk\build-tools\23.0.1\zipalign" -v 4 android-release-unsigned.apk tmp.apk
+"c:\Program Files (x86)\Android\android-sdk\build-tools\23.0.1\zipalign" -v 4 android-release-unaligned.apk tmp.apk

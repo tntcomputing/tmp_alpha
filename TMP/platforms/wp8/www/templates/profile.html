@@ -6,13 +6,17 @@
         
         <div class="list card">
             <div class="item">
-                <h2>{{user.name}}</h2>
-                <p>{{user.email}}</p>
-                <p>{{user.id}}</p>
+                <h2>{{loggedin_name}}</h2>
+                <p>{{loggedin_id}}</p>
+                
+                <p><span>Credits: </span>{{user.credits}}</p>
+                <h2>Add Credits</h2>
+                <div>Enter Code: <a href="#" editable-password="user.passcode" onaftersave="creditAccount()">{{ user.passcode || 'Enter code' }}</a></div>
+
             </div>
-            <div class="item item-body">
-                <img src="http://graph.facebook.com/{{user.id}}/picture?width=270&height=270" />
-            </div>
+            <button ng-click="logout()" class="button button-balanced button-block  icon-left ion-log-out">Logout</button>
+
+            
         </div>
     </ion-content>
 </ion-view>

@@ -4,100 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB', 'pouchdb','ngCordova','xeditable','ui.bootstrap','ion-floating-menu'])
-    
-.service('Supporting', function () {
-    this.maxYear = function () { 
-        return moment().add(2, 'Y').format('YYYY');
-    };
-this.getMOTStatus = function (project) {
-        if (project.motDetails === undefined) {
-            return { motText: 'No MOT Detail', motClass: 'badge badge-dark' };
-        };
-        if (project.motDetails === 'No details held by DVLA') {
-            var dateFirstRegistration = moment(project.dateOfFirstRegistration,'DD MMM YYYY','en');
-            var dateOfFirstMOTDue = moment(project.dateOfFirstRegistration,'DD MMM YYYY','en').add(35,'M');
-            var dateOfFirstMOT = moment(project.dateOfFirstRegistration,'DD MMM YYYY','en').add(36,'M');
-            if (moment() >= dateOfFirstMOT) {
-                return { motText: 'MOT Overdue', motClass: 'badge badge-assertive' };
-            }
-            else if (moment() >= dateOfFirstMOTDue) {
-                return { motText: 'MOT Due', motClass: 'badge badge-energized' };
-            }
-            else {
-                return { motText: 'MOT', motClass: 'badge badge-balanced' };
-            };
-        };
-
-        if (project.motDetails.substr(0,7) === 'Expires') {
-            var dateOfMOTExpires = moment(project.motDetails,'DD MMM YYYY','en');
-            var dateOfMOTDue = moment(project.motDetails,'DD MMM YYYY','en').add(-1,'M');
-
-            if (moment() >= dateOfMOTExpires) {
-                return { motText: 'MOT Overdue', motClass: 'badge badge-assertive' };
-            }
-            else if (moment() >= dateOfMOTDue) {
-                return { motText: 'MOT Due', motClass: 'badge badge-energized' };
-            }
-            else {
-                return { motText: 'MOT', motClass: 'badge badge-balanced' };
-            };
-        };
-        if (project.motDetails === '') {
-            return { motText: 'No MOT Detail', motClass: 'badge badge-dark' };
-        };
-
-
-        
-        return { motText: project.motDetails, motClass: 'badge badge-dark' };
-    };
- this.getTaxStatus = function (project) {
-        if (project.taxDetails === undefined) {
-            return { taxText: 'No Tax Detail', taxClass: 'badge badge-dark tax' };
-        };
-        if (project.taxDetails === 'Not taxed') {
-            return { taxText: 'Not taxed', motClass: 'badge badge-assertive tax' };
-        };
-        if (project.taxDetails.substr(0, 7) === 'Tax due') {
-            var dateOfTaxExpires = moment(project.taxDetails, 'DD MMM YYYY', 'en');
-            var dateOfTaxDue = moment(project.taxDetails, 'DD MMM YYYY', 'en').add(-1, 'M');
-
-            if (moment() >= dateOfTaxExpires) {
-                return { taxText: 'Tax Overdue', taxClass: 'badge badge-assertive tax' };
-            }
-            else if (moment() >= dateOfTaxDue) {
-                return { taxText: 'Tax Due', taxClass: 'badge badge-energized tax' };
-            }
-            else {
-                return { taxText: 'Taxed', taxClass: 'badge badge-balanced tax' };
-            };
-        };
-        if (project.taxDetails === '') {
-            return { taxText: 'No Tax Detail', taxClass: 'badge badge-dark tax' };
-        };
-
-        return { taxText: project.taxDetails, taxClass: 'badge badge-dark tax' };
- };
-this.getInsuranceStatus = function(project){
-    if (project.insuranceExpiryDate === '') {
-        return { insuranceText: 'No Insurance Info', insuranceClass: 'badge badge-dark insurance' };
-    };
-    var dateInsuranceExpires = moment(project.insuranceExpiryDate);
-    var dateInsuranceDue = moment(project.insuranceExpiryDate).add(-1, 'M');
-    if (moment() >= dateInsuranceExpires) {
-        return { insuranceText: 'No Insurance', insuranceClass: 'badge badge-assertive insurance' };
-            }
-            else if (moment() >= dateInsuranceDue) {
-                return { insuranceText: 'Insurance Due', insuranceClass: 'badge badge-energized insurance' };
-            }
-            else {
-                return { insuranceText: 'Insured', insuranceClass: 'badge badge-balanced insurance' };
-            };
-
-    return { insuranceText: 'Not Enough Insurance Info', insuranceClass: 'badge badge-dark insurance' };
-};
-})   
-.service('pouchDBService', function (pouchDB,$q) {
+angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB', 'pouchdb','ngCordova','xeditable','ui.bootstrap','ion-floating-menu','ui.select'])
+ .service('pouchDBService', function (pouchDB,$q) {
     //Create pouchDB database
     // PouchDB.debug.enable('*');
     var username =  'tognimmearceonlyportsmet' ;
@@ -105,6 +13,36 @@ this.getInsuranceStatus = function(project){
     //this.remoteDBName = '';
     var remotedb =  new pouchDB('https://tntcomputing.cloudant.com/tmp/', {skipSetup: true});
     var db = new pouchDB('TMP');
+   
+    var tmpDesign = {
+        _id: '_design/insurance',
+        views: {
+            'insurance': {
+                map: function (doc) {
+                    if (doc.hasOwnProperty('data')) {
+                        if (doc.data.hasOwnProperty('insurancePolicyRef')) {
+                            if (moment(doc.data.insuranceExpiryDate).isSameOrAfter(moment(0, 'HH'))) {
+                                emit(doc.data.insurancePolicyRef, { insuranceDetails: doc.data.insuranceDetails, insuranceExpiryDate: doc.data.insuranceExpiryDate });
+
+                            }
+                              }
+                    }
+                    
+                }.toString(),
+                reduce: '_count'
+                    
+            }
+        }
+    };
+    db.put(tmpDesign).then(function (info) {
+        // kick off an initial build, return immediately
+        db.query('insurance', { stale: 'update_after' });
+    }).catch(function (err) {
+        // if err.name === 'conflict', then
+        // design doc already exists
+
+    });
+    
     remotedb.login(username, password, function (err, response) {
         if (err) {
             if (err.name === 'unauthorized') {
@@ -346,8 +284,185 @@ this.getInsuranceStatus = function(project){
 })
 .service('Data',function(){
     return {};
-})
-.run(function ($ionicPlatform, ngFB, pouchDB, editableOptions) {
+})   
+.service('Supporting', ['Data','pouchDBService', function (Data,pouchDBService) {
+    this.maxYear = function () { 
+        return moment(0, 'HH').add(2, 'Y').format('YYYY');
+    };
+this.getMOTStatus = function (project) {
+        if (project.motDetails === undefined) {
+            return { motText: 'No MOT Detail', motClass: 'badge badge-dark', motExpiresDate: moment(0, 'H').add(12, 'M').toDate(), passFail: '' };
+        };
+        if (project.motDetails === 'No details held by DVLA') {
+            var dateFirstRegistration = moment(project.dateOfFirstRegistration,'DD MMM YYYY','en');
+            var dateOfFirstMOTDue = moment(project.dateOfFirstRegistration,'DD MMM YYYY','en').add(35,'M');
+            var dateOfFirstMOT = moment(project.dateOfFirstRegistration,'DD MMM YYYY','en').add(36,'M');
+            if (moment(0, 'HH').isSameOrAfter(dateOfFirstMOT)) {
+                return { motText: 'MOT Overdue', motClass: 'badge badge-assertive', motExpiresDate: dateOfFirstMOT.add(12, 'M').toDate(), passFail: '' };
+            }
+            else if (moment(0, 'HH').isSameOrAfter(dateOfFirstMOTDue)) {
+                return { motText: 'MOT Due', motClass: 'badge badge-energized', motExpiresDate: dateOfFirstMOT.add(12, 'M').toDate(), passFail: '' };
+            }
+            else {
+                return { motText: 'MOT', motClass: 'badge badge-balanced', motExpiresDate: dateOfFirstMOT.add(12, 'M').toDate(), passFail: '' };
+            };
+        };
+
+        if (project.motDetails.substr(0,7) === 'Expires') {
+            var dateOfMOTExpires = moment(project.motDetails,'DD MMM YYYY','en');
+            var dateOfMOTDue = moment(project.motDetails,'DD MMM YYYY','en').add(-1,'M');
+
+            if (moment(0, 'HH').isSameOrAfter(dateOfMOTExpires)) {
+                return { motText: 'MOT Overdue', motClass: 'badge badge-assertive', motExpiresDate:  moment().add(12, 'M').toDate(), passFail: '' };
+            }
+            else if (moment(0, 'HH').isSameOrAfter(dateOfMOTDue)) {
+                return { motText: 'MOT Due', motClass: 'badge badge-energized', motExpiresDate: dateOfMOTExpires.add(12, 'M').toDate(), passFail: '' };
+            }
+            else {
+                return { motText: 'MOT', motClass: 'badge badge-balanced', motExpiresDate: moment().add(12, 'M').toDate(), passFail: '' };
+            };
+        };
+        if (project.motDetails === '') {
+            return { motText: 'No MOT Detail', motClass: 'badge badge-dark', motExpiresDate: moment(0,'H').add(12, 'M').toDate(), passFail: '' };
+        };
+
+
+        
+        return { motText: project.motDetails, motClass: 'badge badge-dark', motExpiresDate: moment(0,'H').add(12, 'M').toDate(), passFail: '' };
+    };
+ this.getTaxStatus = function (project) {
+        if (project.taxDetails === undefined) {
+            return { taxText: 'No Tax Detail', taxClass: 'badge badge-dark tax', taxType: 'Not Taxed', taxExpires: moment(0,'H').format('DD/MM/YYYY').toString(),taxExpiresDate : moment(0,'HH').toDate() };
+        };
+        if (project.taxDetails === 'Not taxed') {
+            return { taxText: 'Not taxed', motClass: 'badge badge-assertive tax', taxType: 'Not Taxed', taxExpires: moment(0, 'H').format('DD/MM/YYYY').toString(), taxExpiresDate: moment(0, 'HH').toDate() };
+        };
+        if (project.taxDetails.substr(0, 7) === 'Tax due') {
+            var dateOfTaxExpires = moment(project.taxDetails, 'DD MMM YYYY', 'en');
+            var dateOfTaxDue = moment(project.taxDetails, 'DD MMM YYYY', 'en').add(-1, 'M');
+
+            if (moment(0, 'HH').isSameOrAfter(dateOfTaxExpires)) {
+                return { taxText: 'Tax Overdue', taxClass: 'badge badge-assertive tax', taxType: 'Not Taxed', taxExpires: dateOfTaxExpires.format('DD/MM/YYYY').toString(), taxExpiresDate: dateOfTaxExpires.toDate() };
+            }
+            else if (moment(0, 'HH').isSameOrAfter(dateOfTaxDue)) {
+                return { taxText: 'Tax Due', taxClass: 'badge badge-energized tax', taxType: 'Taxed', taxExpires: dateOfTaxExpires.format('DD/MM/YYYY').toString(), taxExpiresDate: dateOfTaxExpires.toDate() };
+            }
+            else {
+                return { taxText: 'Taxed', taxClass: 'badge badge-balanced tax', taxType: 'Taxed', taxExpires: dateOfTaxExpires.format('DD/MM/YYYY').toString(), taxExpiresDate: dateOfTaxExpires.toDate() };
+            };
+        };
+        if (project.taxDetails === '') {
+            return { taxText: 'No Tax Detail', taxClass: 'badge badge-dark tax', taxType: 'Not Taxed', taxExpires: moment(0, 'HH').format('DD/MM/YYYY').toString(),taxExpiresDate : moment(0,'HH').toDate() };
+        };
+        if (project.taxDetails.toUpperCase().indexOf('SORN') !== -1) {
+            return { taxText: 'SORN', taxClass: 'badge badge-balanced tax', taxType: 'SORN', taxExpires: moment(0, 'HH').format('DD/MM/YYYY').toString(),taxExpiresDate : moment(0,'HH').toDate() };
+        };
+        return { taxText: project.taxDetails, taxClass: 'badge badge-dark tax', taxType: 'Not Taxed', taxExpires: moment(0, 'HH').format('DD/MM/YYYY').toString(), taxExpiresDate: moment(0, 'HH').toDate() };
+ };
+this.getInsuranceStatus = function(project){
+    if (project.insuranceExpiryDate === '') {
+        return { insuranceText: 'No Insurance Info', insuranceClass: 'badge badge-dark insurance' };
+    };
+    var dateInsuranceExpires = moment(project.insuranceExpiryDate);
+    var dateInsuranceDue = moment(project.insuranceExpiryDate).add(-1, 'M');
+    if (moment(0, 'HH').isSameOrAfter(dateInsuranceExpires)) {
+        return { insuranceText: 'No Insurance', insuranceClass: 'badge badge-assertive insurance' };
+            }
+    else if (moment(0, 'HH').isSameOrAfter(dateInsuranceDue)) {
+                return { insuranceText: 'Insurance Due', insuranceClass: 'badge badge-energized insurance' };
+            }
+            else {
+                return { insuranceText: 'Insured', insuranceClass: 'badge badge-balanced insurance' };
+            };
+
+    return { insuranceText: 'Not Enough Insurance Info', insuranceClass: 'badge badge-dark insurance' };
+};
+this.getUserCredits = function () {
+    if (!Data.user.hasOwnProperty('credits')) {
+        //No credits ever given start with 10
+        Data.user.credits = 10;
+        pouchDBService.saveToLocalDB(Data.user).then(
+                            function (response) {
+                                return Data.user.credits;
+
+                            },
+                            function (error) {
+                                console.log('Failed Save to LocalDB', error);
+                            });
+    }
+    else
+    {
+        return Data.user.credits;
+    };
+    return 
+};
+this.addCredits = function (numberToAdd) {
+    if (Data.user.hasOwnProperty('credits')) {
+        //No credits ever given start with 10
+        Data.user.credits = Data.user.credits + numberToAdd;
+        pouchDBService.saveToLocalDB(Data.user).then(
+                            function (response) {
+                                return Data.user.credits;
+
+                            },
+                            function (error) {
+                                
+                            });
+    }
+    else {
+        console.log('Credits not setup', error);
+    };
+};
+
+this.decrementCredits = function (numberToRemove) {
+    if (Data.user.hasOwnProperty('credits')) {
+        //No credits ever given start with 10
+        Data.user.credits = Data.user.credits - numberToRemove;
+        pouchDBService.saveToLocalDB(Data.user).then(
+                            function (response) {
+                                return Data.user.credits;
+
+                            },
+                            function (error) {
+
+                            });
+    }
+    else {
+        console.log('Credits not setup', error);
+    };
+};
+
+}])   
+
+.run(function ($ionicPlatform, $ionicPopup, ngFB, pouchDB, editableOptions, $state, $ionicHistory) {
+    // Disable BACK button on home
+    $ionicPlatform.registerBackButtonAction(function (event) {
+
+        if ($state.current.name == "app.projects") { // your check here
+            $ionicPopup.confirm({
+                title: 'System warning',
+                template: 'are you sure you want to exit?'
+            }).then(function (res) {
+                if (res) {
+                    ionic.Platform.exitApp();
+                    //navigator.app.exitApp();
+                }
+                else
+                    $ionicHistory.goBack();
+            })
+        } else {
+            if ($state.current.name == "app.single")
+            {
+                $state.go('app.projects');
+            }
+            else{
+            //console.log(JSON.stringify($ionicHistory.viewHistory()));
+            $ionicHistory.goBack();}
+        }
+
+
+    }, 100);
+    
     //console.log('Run');
     ngFB.init({ appId: '1697547563816578' });
     editableOptions.theme = 'bs3';
@@ -369,6 +484,7 @@ this.getInsuranceStatus = function(project){
         }
     }
   });
+    
 })
 .directive('appVersion', function () {
     return function (scope, elm, attrs) {
@@ -395,6 +511,7 @@ this.getInsuranceStatus = function(project){
             }
         }
     })
+    
 
     .state('app.browse', {
         url: '/browse',
@@ -404,6 +521,7 @@ this.getInsuranceStatus = function(project){
             }
         }
     })
+    
       .state('app.projects', {
           url: '/projects',
           cache: false,
@@ -426,11 +544,11 @@ this.getInsuranceStatus = function(project){
         }
     })
     .state('app.profile', {
-        url: "/profile",
+        url: '/profile',
         views: {
             'menuContent': {
-                templateUrl: "templates/profile.html",
-                controller: "ProfileCtrl"
+                templateUrl: 'templates/profile.html',
+                controller: 'ProfileCtrl'
             }
         }
     })
@@ -443,6 +561,15 @@ this.getInsuranceStatus = function(project){
             }
         }
     })
+        .state('app.purchases', {
+        url: "/purchases",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/purchases.html",
+                controller: "PurchasesCtrl"
+            }
+        }
+    })
     .state('app.about',{
         url: "/about",
         cache: false,
@@ -452,6 +579,26 @@ this.getInsuranceStatus = function(project){
                 controller: "AboutCtrl"
             }
         }
+    })
+    .state('app.login', {
+        url: '/login',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+     
+    })
+    .state('app.signup', {
+        url: '/signup',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/signup.html',
+                controller: 'SignupCtrl'
+            }
+        }
+
     });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/projects');

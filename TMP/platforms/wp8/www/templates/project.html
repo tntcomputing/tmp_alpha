@@ -108,58 +108,149 @@
 
                   <h2 class="item item-divider">Tax Status<span ng-class="project.taxStatus.taxClass">{{project.taxStatus.taxText}}</span></h2>
               
-              
-              <p>
-                  <span>Tax Status: </span>{{project.data.taxStatus}}<br />
-                  <span>Tax Details: </span>{{project.data.taxDetails}}<br />
-                  <button class="button button-outline button-energized" ng-click="updateTax()" ng-show="editMode">
-                      Update Tax Info
-                  </button>
-
-              </p>
-              <h2 class="item item-divider">Insurance Status<span ng-class="project.insuranceStatus.insuranceClass">{{project.insuranceStatus.insuranceText}}</span></h2>
-
               <div ng-show="!editMode">
                   <p>
-                      <span>Insurance Provider: </span>{{project.data.insuranceDetails}}<br />
-                      <span>Insurance Policy Ref: </span>{{project.data.insurancePolicyRef}}<br />
-                      <span>Insurance Expiry Date: </span>{{project.data.insuranceExpiryDate | date: "dd-MM-yyyy HH:mm"}}<br />
-
+                      <span>Tax Status: </span>{{project.taxStatus.taxText}}<br />
+                      <span>Tax Details: </span>{{project.taxDetails}}<br />
+                      
 
                   </p>
-            </div>
+              </div>
               <div ng-show="editMode">
-                  <span>Insurance Provider: </span>
-                  <span>
-                      <a href="#" editable-text="project.data.insuranceDetails" e-rows="7" e-cols="25" onaftersave="updateProject()">
-                          <pre>{{ project.data.insuranceDetails || 'Enter Insurance Provider' }}</pre>
-                      </a>
-                  </span>
-                  <br />
-                  <span>Insurance Policy Ref: </span>
-                  <span>
-                      <a href="#" editable-text="project.data.insurancePolicyRef" e-rows="7" e-cols="25" onaftersave="updateProject()">
-                          <pre>{{ project.data.insurancePolicyRef || 'Enter Insurance Policy Ref' }}</pre>
-                      </a>
-                  </span>
-                  <br />
-                  <span>Insurance Expiry Date: </span>
-                  <span>
-                      <a href="#" editable-combodate="project.data.insuranceExpiryDate" e-min-year="2015" e-max-year="{{project.maxYear}}" onaftersave="updateProject()">
-                          {{ (project.data.insuranceExpiryDate | date:"dd-MM-yyyy HH:mm") || 'Enter Expiry Date' }}
-                      </a>
-                  </span>
-            </div>
+                  <button class="button button-outline button-energized" ng-click="updateTax()" >
+                      Update Tax Info
+                  </button>
+                  <h2>Or Edit Manually</h2>
+                  
+                      <form editable-form name="taxForm" onaftersave="saveTax()" onshow="true">
+                          <span>Tax Status: </span>
+                          <a href="#" editable-radiolist="project.taxStatus.taxType" e-ng-options="ts.value as ts.text for ts in taxStatuses track by ts.value">
+                              {{ project.taxStatus.taxType }}
+                          </a><br/>
+                          <span>Tax Expiry Date: </span>
+                          <span>
+                              <a href="#" editable-date="project.taxStatus.taxExpiresDate" e-min-year="2015" e-max-year="{{project.maxYear}}" >
+                                  {{ (project.taxStatus.taxExpiresDate | date:"dd-MM-yyyy") || 'Enter Expiry Date' }}
+                              </a>
+                          </span>
+
+                          <div class="buttons">
+                              <!-- button to show form -->
+                              <button type="button" class="btn btn-default" ng-click="taxForm.$show()" ng-show="!taxForm.$visible">
+                                  Edit
+                              </button>
+                              <!-- buttons to submit / cancel form -->
+                              <span ng-show="taxForm.$visible">
+                                  <button type="submit" class="btn btn-primary" ng-disabled="taxForm.$waiting">
+                                      Save Tax Info
+                                  </button>
+                                  <button type="button" class="btn btn-default" ng-disabled="taxForm.$waiting" ng-click="taxForm.$cancel(); getTaxStatus(project);">
+                                      Cancel
+                                  </button>
+                              </span>
+                          </div>
+                          </form>
+
+              </div>
+
+                  <h2 class="item item-divider">Insurance Status<span ng-class="project.insuranceStatus.insuranceClass">{{project.insuranceStatus.insuranceText}}</span></h2>
+
+                  <div ng-show="!editMode">
+
+                      <p>
+                          <span>Insurance Provider: </span>{{project.data.insuranceDetails}}<br />
+                          <span>Insurance Policy Ref: </span>{{project.data.insurancePolicyRef}}<br />
+                          <span>Insurance Expiry Date: </span>{{project.data.insuranceExpiryDate | date: "dd-MM-yyyy"}}<br />
+
+
+                      </p>
+                  </div>
+                  <div ng-show="editMode">
+                      <h2>Add vehicle to existing insurance</h2>
+
+                      <ui-select ng-model="project.insurance"
+                                 theme="bootstrap"
+                                 append-to-body="false"
+                                 reset-search-input="true"
+                                 style="width: 100%;"
+                                 title="Choose an existing policy" on-select="policySelected(project.insurance)">
+                          <ui-select-match placeholder="Select existing...">{{$select.selected.insuranceDetails}}</ui-select-match>
+                          <ui-select-choices style="width: 100%; " repeat="insurance in insuranceList | filter: {insuranceDetails: $select.search, policyRef: $select.search} ">
+                              <div ng-bind-html="insurance.insuranceDetails | highlight: $select.search"></div>
+                              <small>
+                                  Policy Ref: <span ng-bind-html="''+insurance.policyRef | highlight: $select.search"></span>
+                                  Expiry Date: {{insurance.insuranceExpiryDate}}
+                              </small>
+                          </ui-select-choices>
+                      </ui-select>
+                        <h2>OR</h2>
+                      <h2><strong>Or Add Policy...</strong></h2>
+                      <span>Insurance Provider: </span>
+                      <span>
+                          <a href="#" editable-text="project.data.insuranceDetails" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                              <pre>{{ project.data.insuranceDetails || 'Enter Insurance Provider' }}</pre>
+                          </a>
+                      </span>
+                      <br />
+                      <span>Insurance Policy Ref: </span>
+                      <span>
+                          <a href="#" editable-text="project.data.insurancePolicyRef" e-rows="7" e-cols="25" onaftersave="updateProject()">
+                              <pre>{{ project.data.insurancePolicyRef || 'Enter Insurance Policy Ref' }}</pre>
+                          </a>
+                      </span>
+                      <br />
+                      <span>Insurance Expiry Date: </span>
+                      <span>
+                          <a href="#" editable-date="project.data.insuranceExpiryDate" e-min-year="2015" e-max-year="{{project.maxYear}}" onaftersave="updateProject()">
+                              {{ (project.data.insuranceExpiryDate | date:"dd-MM-yyyy") || 'Enter Expiry Date' }}
+                          </a>
+                      </span>
+                  </div>
                   <h2 class="item item-divider">
                       Mot Status<span ng-class="project.motStatus.motClass">{{project.motStatus.motText}}</span>
                   </h2>
-                  <p>
+                  
+                      <div ng-show="!editMode">
+                          <span>Mot: </span>{{project.data.motDetails}}<br />
+                          <span>Latest MOT Date: </span>{{project.motTestReports[0].testDate}}<br />
+                      </div>
+                      <div ng-show="editMode">
 
-                      <span>Mot: </span>{{project.data.motDetails}}<br />
-                      <span>Latest MOT Date: </span>{{project.motTestReports[0].testDate}}<br />
-                      <button class="button button-outline button-energized" ng-click="updateMOT()" ng-show="editMode">
-                          Update MOT
-                      </button>
+                          <button class="button button-outline button-energized" ng-click="updateMOT()" ng-show="editMode">
+                              Update MOT
+                          </button>
+                          <h2>OR</h2>
+                          <h2><strong>Manually add MOT Pass</strong></h2>
+                          <form editable-form name="motForm" onaftersave="saveMOT()" onshow="true">
+                              <span>Passed MOT: </span>
+                              <a href="#" editable-select="project.motStatus.passFail" e-ng-options="ms.value as ms.text for ms in motStatuses track by ms.value">
+                                  {{ project.motStatus.passFail }}
+                              </a><br />
+                              <span>MOT Expiry Date: </span>
+                              <span>
+                                  <a href="#" editable-date="project.data.motStatus.motExpiresDate" e-min-year="2015" e-max-year="{{project.maxYear}}" onaftersave="updateProject()">
+                                      {{ (project.motTestReports[0].expiryDate | date:"dd-MM-yyyy") || 'Enter Expiry Date' }}
+                                  </a>
+                              </span>
+                              <div class="buttons">
+                                  <!-- button to show form -->
+                                  <button type="button" class="btn btn-default" ng-click="motForm.$show()" ng-show="!motForm.$visible">
+                                      Edit
+                                  </button>
+                                  <!-- buttons to submit / cancel form -->
+                                  <span ng-show="motForm.$visible">
+                                      <button type="submit" class="btn btn-primary" ng-disabled="motForm.$waiting">
+                                          Save MOT Info
+                                      </button>
+                                      <button type="button" class="btn btn-default" ng-disabled="motForm.$waiting" ng-click="motForm.$cancel(); getMOTStatus(project);">
+                                          Cancel
+                                      </button>
+                                  </span>
+                              </div>
+                         </form>
+</div>
+                      
+                     <p>
                       <h3 class="item item-divider">Mot Date: {{project.motTestReports[project.currentMOT].testDate}}</h3>
                       <span>Mot Reference Number: </span>{{project.motTestReports[project.currentMOT].motTestNumber}}<br />
                       <span>Mot Date: </span>{{project.motTestReports[project.currentMOT].testDate}}<br />

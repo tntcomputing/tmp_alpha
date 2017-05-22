@@ -89,3 +89,114 @@ ion-item .insurance {
     color:#FFF !important;
 
 }
+menuText2{
+    background-color:#c94a2a !important;
+    color:#FFF !important;
+
+}
+
+
+.registration-ui {
+	background: linear-gradient(to bottom, #f8d038 0%,#f5ca2e 100%);
+	padding: .25em 1em .25em 1.75em;
+	font-weight: bold;
+	font-size: 2em;
+	border-radius: 5px;
+	border: 1px solid #000;
+	box-shadow: 1px 1px 1px #ddd;
+	position: relative;
+    font-family: helvetica, ariel, sans-serif;
+    display:block;
+    width:70%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.registration-ui:before {
+	content: 'GB';
+	display: block;
+	width: 30px;
+	height: 100%;
+	background: #063298;
+	position: absolute;
+	top: 0;
+    left: 0;
+	border-radius: 5px 0 0 5px;
+	color: #f8d038;
+	font-size: .5em;
+	line-height: 85px;
+	padding-left: 5px;
+}
+
+.registration-ui:after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 7px;
+	left: 5px;
+	width: 20px;
+	height: 20px;
+	border-radius: 30px;
+	border: 1px dashed #f8d038;
+}
+
+
+#vehicleReg { 
+   width: 100%;
+    margin:auto;
+    background-color: transparent;
+    border:0;
+    line-height: 50px;
+    font-family: number_plate;
+    font-weight: bold;
+    font-size: 28px;
+    text-transform:uppercase;
+  text-align:center;
+    position:relative; z-index:2;
+}
+
+::-webkit-input-placeholder {
+    font-family: number_plate;
+    font-weight: bold;
+    font-size: 28px;
+    text-transform:uppercase;
+    color:black;
+    text-align:center;
+}
+
+:-moz-placeholder { /* Firefox 18- */    font-family: number_plate;
+    font-family: number_plate;
+    font-weight: bold;
+    font-size: 28px;
+    text-transform:uppercase;
+    color:black;
+    text-align:center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    font-family: number_plate;
+    font-weight: bold;
+    font-size: 28px;
+    text-transform:uppercase;
+    color:black;
+    text-align:center;
+}
+
+:-ms-input-placeholder {  
+    font-family: number_plate;
+    font-weight: bold;
+    font-size: 28px;
+    text-transform:uppercase;
+    color:black;
+    text-align:center;
+}
+
+placeholder {
+    font-family: number_plate;
+    font-weight: bold;
+    font-size: 28px;
+    text-transform:uppercase;
+    color:black;
+    text-align:center;   
+}
+

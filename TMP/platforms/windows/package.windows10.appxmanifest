@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Package IgnorableNamespaces="uap mp" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10">
-    <Identity Name="uk.co.tntcomputing.tmp" Publisher="CN=$username$" Version="0.0.3.0" />
+    <Identity Name="uk.co.tntcomputing.tmp" Publisher="CN=$username$" Version="0.0.16.0" />
     <mp:PhoneIdentity PhoneProductId="a71acd20-ded5-11e5-92ad-033e0513b2f2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
     <Properties>
         <DisplayName>Too Many Projects</DisplayName>
