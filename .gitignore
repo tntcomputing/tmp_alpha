@@ -1,0 +1,10 @@
+*.keystore
+TMP/*.keystore
+*.sw*
+TMP/platforms/
+TMP/plugins/
+TMP/app/bower_components/
+TMP/node_modules/
+.tmp/
+.DS_Store
+*.log
