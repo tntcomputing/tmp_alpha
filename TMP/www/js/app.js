@@ -435,6 +435,7 @@ this.decrementCredits = function (numberToRemove) {
 }])   
 
 .run(function ($ionicPlatform, $ionicPopup, ngFB, pouchDB, editableOptions, $state, $ionicHistory) {
+    
     // Disable BACK button on home
     $ionicPlatform.registerBackButtonAction(function (event) {
 
