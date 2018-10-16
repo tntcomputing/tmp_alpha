@@ -5,6 +5,8 @@ TMP/platforms/
 TMP/plugins/
 TMP/app/bower_components/
 TMP/node_modules/
+TMP/resources/
+TMP/www/lib/
 .tmp/
 .DS_Store
 *.log

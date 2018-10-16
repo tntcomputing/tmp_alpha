@@ -1,30 +1,67 @@
 {
-  "name": "ionic-sidemenu",
-  "version": "1.1.1",
-  "description": "An Ionic project",
-  "dependencies": {
-    "@ionic/cloud": "^0.16.0",
-    "@ionic/cloud-angular": "^0.12.0",
-    "gulp": "^3.5.6",
-    "gulp-concat": "^2.2.0",
-    "gulp-minify-css": "^0.3.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-sass": "^2.0.4"
-  },
-  "devDependencies": {
-    "@ionic/cli-plugin-cordova": "1.4.0",
-    "@ionic/cli-plugin-gulp": "1.0.1",
-    "@ionic/cli-plugin-ionic1": "2.0.0",
-    "bower": "^1.3.3",
-    "gulp-util": "^2.2.14",
-    "shelljs": "^0.3.0"
-  },
-  "cordovaPlugins": [
-    "cordova-plugin-device",
-    "cordova-plugin-console",
-    "cordova-plugin-whitelist",
-    "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
-  ],
-  "cordovaPlatforms": []
+    "name": "ionic-sidemenu",
+    "version": "1.1.1",
+    "description": "An Ionic project",
+    "dependencies": {
+        "@ionic/cloud": "^0.16.0",
+        "@ionic/cloud-angular": "^0.12.0",
+        "cordova-android": "^6.4.0",
+        "gulp": "^3.5.6",
+        "gulp-concat": "^2.2.0",
+        "gulp-minify-css": "^0.3.0",
+        "gulp-rename": "^1.2.0",
+        "gulp-sass": "^2.0.4",
+        "cordova-plugin-actionsheet": "https://github.com/EddyVerbruggen/cordova-plugin-actionsheet",
+        "cordova-plugin-app-version": "https://github.com/whiteoctober/cordova-plugin-app-version",
+        "cordova-plugin-camera": "2.1.1",
+        "cordova-plugin-console": "~1.0.2",
+        "cordova-plugin-device": "~1.1.6",
+        "cordova-plugin-file": "4.1.1",
+        "cordova-plugin-file-transfer": "1.5.0",
+        "cordova-plugin-filepath": "https://github.com/hiddentao/cordova-plugin-filepath",
+        "cordova-plugin-inappbrowser": "1.2.1",
+        "cordova-plugin-inapppurchase": "https://github.com/AlexDisler/cordova-plugin-inapppurchase",
+        "cordova-plugin-splashscreen": "3.1.0",
+        "cordova-plugin-statusbar": "~2.1.0",
+        "cordova-plugin-whitelist": "~1.2.1",
+        "ionic-plugin-keyboard": "~1.0.8",
+        "phonegap-plugin-push": "2.0.0-rc3"
+    },
+    "devDependencies": {
+        "@ionic/cli-plugin-cordova": "1.4.0",
+        "@ionic/cli-plugin-gulp": "1.0.1",
+        "@ionic/cli-plugin-ionic1": "2.0.0",
+        "bower": "^1.3.3",
+        "gulp-util": "^2.2.14",
+        "shelljs": "^0.3.0"
+    },
+    "cordovaPlugins": [
+        "cordova-plugin-device",
+        "cordova-plugin-console",
+        "cordova-plugin-whitelist",
+        "cordova-plugin-statusbar",
+        "ionic-plugin-keyboard"
+    ],
+    "cordovaPlatforms": [],
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-actionsheet": {},
+            "cordova-plugin-app-version": {},
+            "cordova-plugin-camera": {},
+            "cordova-plugin-console": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-file": {},
+            "cordova-plugin-file-transfer": {},
+            "cordova-plugin-filepath": {},
+            "cordova-plugin-inappbrowser": {},
+            "cordova-plugin-inapppurchase": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-whitelist": {},
+            "ionic-plugin-keyboard": {},
+            "phonegap-plugin-push": {
+                "SENDER_ID": "GCM_PROJECT_NUMBER"
+            }
+        }
+    }
 }

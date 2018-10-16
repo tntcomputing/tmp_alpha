@@ -8,10 +8,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB', 'pouchdb'
  .service('pouchDBService', function (pouchDB,$q) {
     //Create pouchDB database
     // PouchDB.debug.enable('*');
-    var username =  'tognimmearceonlyportsmet' ;
-    var password = '5eff2322baf0ad863feaa071b3a023960946b079';
+     var username = 'tognimmearceonlyportsmet';
+     username = 'areshatersearmusentandle';
+
+     var password = '5eff2322baf0ad863feaa071b3a023960946b079';
+     password = 'd958014505271414789b08a2ec8773eb187b6e5f;'
     //this.remoteDBName = '';
-    var remotedb =  new pouchDB('https://tntcomputing.cloudant.com/tmp/', {skipSetup: true});
+     var remotedb = new pouchDB('https://' + username + ':' + password +'@65562c3c-82cc-4734-9628-e971749cb27f-bluemix.cloudant.com/tmp', { skipSetup: true });
     var db = new pouchDB('TMP');
    
     var tmpDesign = {
